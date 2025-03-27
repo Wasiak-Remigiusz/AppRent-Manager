@@ -1,0 +1,140 @@
+{% extends "base.html" %} {% block content %}
+<!-- Modal DELET BTN-->
+<div
+  class="modal fade"
+  id="confirmDeleteModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          This user will be deleted:
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" id="idDeleteModalBody">...</div>
+      <div class="modal-footer">
+        <form action="" method="GET" id="confirmDeleteForm">
+          <button
+            type="button"
+            class="btn btn-modal-close"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal DELET BTN-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    //For a Delete Record Popup
+    // This function is applied to all elements with class ending with ".delete-confirm"
+    $(".delete-confirm").click(function () {
+      //getattributes of the found element
+      var desc = $(this).attr("data-desc");
+      var url = $(this).attr("data-url");
+      //the #... designes id if an element - change the text in the modal window
+      $("#idDeleteModalBody").text(desc);
+      $("#confirmDeleteForm").attr("action", url);
+    });
+  });
+</script>
+
+<!-- container -->
+<div class="container py-5 main-design">
+  <div class="row">
+    <div class="col-12">
+      <div class="info-first title-admin-panel col-4"><p>admin panel</p></div>
+      <div class="row">
+        <div class="col-10"></div>
+        <div class="col-2 add-user">
+          <form action="{{url_for('admin.new_user')}}">
+            <label for="exampleInputLastName" class="form-label"
+              >Add user:</label
+            >
+            <button type="submit" class="btn btn-add-user">
+              <i class="fa-solid fa-user-plus fa-lg i-add-user"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <table class="table table-hover mt-4">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">User name</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Is active</th>
+            <th scope="col">Is admin</th>
+            <th scope="col">Action</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tr>
+          {% for user in users%}
+          <th scope="row">{{ user.userName}}</th>
+
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <a
+              href="{{url_for('admin.user_status_chenge', action='active', user_name = user.userName)}}"
+            >
+              {%if user.isActive %} &check; {%else%} &#x25a2; {% endif %}
+            </a>
+          </td>
+
+          <td>
+            <a
+              href="{{url_for('admin.user_status_chenge', action='admin', user_name = user.userName)}}"
+            >
+              {%if user.isAdmin %} &check; {%else%} &#x25a2; {% endif %}
+            </a>
+          </td>
+          <td>
+            <a
+              href="{{url_for('admin.edit_user', user_name= user.userName)}} "
+              class="btn btn-info btn-sm delete-confirm btn-users-list {{'disabled' if user.userName == login.user_name}}"
+              >Edit</a
+            >
+          </td>
+          <td>
+            <a
+              href="#"
+              class="btn btn-danger btn-sm delete-confirm btn-users-list {{'disabled' if user.userName == login.user_name}}"
+              data-bs-toggle="modal"
+              data-bs-target="#confirmDeleteModal"
+              data-desc="{{'Delete user {}?'.format(user.userName)}}"
+              data-url="{{url_for('admin.delete_user',user_name= user.userName)}}"
+              >Delete</a
+            >
+          </td>
+        </tr>
+
+        {% endfor %}
+
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="index">
+    <div class="info-signup">
+      <div class="info-first"><p>Edit monthly payment</p></div>
+      <form
+        method="POST"
+        action="{{url_for('apartment_manager.edit_rental_payment', agreement_name=agreement.agreementName, rental_payment_Id = payment.rentPaymentId)}}"
+      >
+        <div class="mb-3">
+          <label for="apartment" class="form-label">Apartment Name</label>
+          <input
+            type="text"
+            id="apartment"
+            name="apartment"
+            value="{{apartment}}"
+            class="form-control"
+            readonly
+            style="background-color: rgba(13, 110, 253, 0.1)"
+          />
+        </div>
+
+        <div class="mt-3 mb-3 rental-agreement-part-division">
+          <div class="mt-3 mb-3">
+            <label for="agreementName" class="form-label"
+              ><i class="fa-solid fa-file-signature"></i>&nbsp;Agreement
+              Name</label
+            >
+            <input
+              type="text"
+              id="agreementName"
+              name="agreementName"
+              value="{{agreement.agreementName}}"
+              class="form-control"
+              readonly
+              style="background-color: rgba(13, 110, 253, 0.1)"
+            />
+          </div>
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="monthBillingPeriod" class="form-label">Month</label>
+              <input
+                type="text"
+                id="monthBillingPeriod"
+                name="monthBillingPeriod"
+                value="{{payment.monthBillingPeriod}}"
+                class="form-control"
+                readonly
+                style="background-color: rgba(13, 110, 253, 0.1)"
+              />
+            </div>
+            <div class="mb-3 col-6">
+              <label for="paymentDueDate" class="form-label"
+                >Payment due date</label
+              >
+              <input
+                type="text"
+                id="paymentDueDate"
+                name="paymentDueDate"
+                value="{{payment.paymentDueDate}}"
+                class="form-control"
+                readonly
+                style="background-color: rgba(13, 110, 253, 0.1)"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="amountPayment" class="form-label"
+                >Total payment ({{agreement.currency.currencySymbol}})</label
+              >
+              <input
+                type="number"
+                id="amountPayment"
+                name="amountPayment"
+                value="{{payment.amountPayment}}"
+                class="form-control"
+                placeholder="Enter day of the month"
+                step="0.01"
+                min="0"
+                readonly
+                style="background-color: rgba(13, 110, 253, 0.1)"
+              />
+            </div>
+
+            <div class="mb-3 col-6">
+              <label for="paymentDate" class="form-label">Payment date</label>
+              <input
+                type="date"
+                id="paymentDate"
+                name="paymentDate"
+                value="{{payment.paymentDate}}"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="monthlyRentPayment" class="form-label"
+                >Monthly rent payment
+                ({{agreement.currency.currencySymbol}})</label
+              >
+              <input
+                type="number"
+                id="monthlyRentPayment"
+                name="monthlyRentPayment"
+                value="{{payment.monthlyRentPayment}}"
+                class="form-control"
+                placeholder="Enter day of the month"
+                step="0.01"
+                min="0"
+              />
+            </div>
+
+            <div class="mb-3 col-6">
+              <label for="monthlyBillsAmount" class="form-label"
+                >Monthly bills amount
+                ({{agreement.currency.currencySymbol}})</label
+              >
+              <input
+                type="number"
+                id="monthlyBillsAmount"
+                name="monthlyBillsAmount"
+                {%
+                if
+                payment.rental_agreement.isBillsSettlement%}
+                value="{{payment.monthlyBillsAmount}}"
+                step="0.01"
+                min="0"
+                placeholder="Enter monthly bills"
+                {%
+                else%}
+                placeholder="No Bills Settlement"
+                readonly
+                style="background-color: rgba(13, 110, 253, 0.1)"
+                {%
+                endif%}
+                class="form-control"
+              />
+            </div>
+          </div>
+          <!-- Is paid -->
+          <div class="rental-agreement-part-division">
+            <div class="mb-3">
+              <label for="isPaid_yes" class="form-label mb-0"
+                >Did the tenant pay the monthly rent?</label
+              >
+              <div id="emailHelp" class="form-text"></div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="isPaid"
+                id="isPaid_yes" value="yes" {% if payment.isPaid == True%}
+                checked {%endif%} />
+                <label class="form-check-label" for="isPaid_yes"> Yes </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="isPaid"
+                id="isPaid_no" value="no" {% if payment.isPaid == False%}
+                checked {%endif%} />
+                <label class="form-check-label" for="isPaid_no"> No </label>
+              </div>
+            </div>
+          </div>
+          <!-- Is paid -->
+          <div class="mt-3 mb-3">
+            <label for="monthlyRentPaymentDesc" class="form-label"
+              >Additional information</label
+            >
+            <textarea
+              id="monthlyRentPaymentDesc"
+              name="monthlyRentPaymentDesc"
+              class="form-control"
+              placeholder="Enter any additional information"
+              rows="3"
+            >
+{{payment.monthlyRentPaymentDesc}}</textarea
+            >
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark">Edit payment</button>
+        <div class="row-end"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

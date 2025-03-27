@@ -1,0 +1,78 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="index">
+    <div class="info-signup">
+      <div class="info-first"><p>Sign Up</p></div>
+      <form method="POST" action="{{url_for('auth.sign_up')}}">
+        <div class="mb-3">
+          <label for="exampleInputFirstName" class="form-label"
+            >First Name</label
+          >
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            value="{{user.first_name}}"
+            class="form-control"
+            id="exampleInputFirstName"
+            aria-describedby="firstName"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputLastName" class="form-label">Last Name</label>
+          <input
+            type="text"
+            id="last_name"
+            name="last_name"
+            value="{{user.last_name}}"
+            class="form-control"
+            id="exampleInputLastName"
+            aria-describedby="lastName"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputUsername" class="form-label">Username</label>
+          <input
+            type="text"
+            id="user_name"
+            name="user_name"
+            value="{{user.user_name}}"
+            class="form-control"
+            id="exampleInputUsername"
+            aria-describedby="Username"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputUserEmail" class="form-label"
+            >Email address</label
+          >
+          <input
+            type="email"
+            id="user_email"
+            name="user_email"
+            value="{{user.user_email}}"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+          />
+          <div id="emailHelp" class="form-text">
+            We'll never share your email with anyone else.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            id="exampleInputPassword1"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-dark">Sign up</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

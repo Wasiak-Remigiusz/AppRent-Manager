@@ -1,0 +1,173 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="index">
+    <div class="info-signup">
+      <div class="info-first"><p>Duplicate bill</p></div>
+      <form
+        method="POST"
+        action="{{url_for('apartment_manager.duplicate_bill_payment', apartment_name=apartment.apartmentName, bill_id = bill.billId)}}"
+      >
+        <div class="mb-3">
+          <label for="apartmentName" class="form-label">Apartment Name</label>
+          <input
+            type="text"
+            id="apartmentName"
+            name="apartmentName"
+            value="{{apartment.apartmentName}}"
+            class="form-control"
+            readonly
+            style="background-color: rgba(13, 110, 253, 0.1)"
+          />
+        </div>
+        <div class="mt-3 mb-3 rental-agreement-part-division">
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="billName" class="form-label"
+                ><i class="fa-solid fa-money-check-dollar-pen"></i>&nbsp;Bill
+                name</label
+              >
+              <input
+                type="text"
+                id="billName"
+                name="billName"
+                placeholder="Enter the bill name"
+                value="{{bill.billName}}"
+                class="form-control"
+              />
+            </div>
+            <div class="mb-3 col-6">
+              <label for="billType" class="form-label">Bill type</label>
+              <select name="billTypeId" id="billTypeId" class="form-select">
+                {% for bill_type in bill_type_list%} <option
+                value="{{bill_type.billTypeId}}" {% if bill %} {{'selected' if
+                bill_type.billTypeId==bill.billTypeId}} {% else %} {{'selected'
+                if bill_type.billTypeId==1}} {% endif %} >
+                {{bill_type.billTypeName}} {% endfor%}
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="monthBillingPeriod " class="form-label">Month </label>
+              <input
+                type="month"
+                id="monthBillingPeriod"
+                name="monthBillingPeriod"
+                value="{{monthBillingPeriod}}"
+                class="form-control"
+              />
+            </div>
+            <div class="mb-3 col-6">
+              <label for="currency" class="form-label">Payment currency</label>
+              <select name="currencyId" id="currencyId" class="form-select">
+                {% for currency in currencies_list%} <option
+                value="{{currency.currencyId}}" {% if bill %} {{'selected' if
+                currency.currencyId==bill.currencyId}} {% else %} {{'selected'
+                if currency.currencyId==4}} {% endif %} >
+                {{currency.currencySymbol}} {% endfor%}
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="paymentDueDate" class="form-label"
+                >Monthly payment due date</label
+              >
+              <input
+                type="number"
+                id="paymentDueDate"
+                name="paymentDueDate"
+                value="{{paymentDueDate}}"
+                class="form-control"
+                placeholder="Enter day of the month"
+                min="1"
+                max="31"
+              />
+            </div>
+
+            <div class="mb-3 col-6">
+              <label for="amountBill" class="form-label">Amount</label>
+              <input
+                type="number"
+                id="amountBill"
+                name="amountBill"
+                value="{{bill.amountBill}}"
+                class="form-control"
+                placeholder="Enter the bill amount"
+                step="0.01"
+                min="0.00"
+              />
+            </div>
+          </div>
+
+          <div class="rental-agreement-part-division">
+            <div class="mb-3">
+              <label for="is_settlement_yes" class="form-label mb-0"
+                ><i class="fa-solid fa-credit-card"></i>&nbsp;Has the bill been
+                paid?</label
+              >
+              <div id="emailHelp" class="form-text"></div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="isPaid"
+                id="isPaid_yes" value="yes" {% if bill %} {% if bill.isPaid ==
+                True%} checked {%endif%} {% else %}checked {%endif%}/>
+                <label class="form-check-label" for="isPaid_yes"> Yes </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="isPaid"
+                id="isPaid_no" value="no" {% if bill.isPaid == False%} checked
+                {%endif%} />
+                <label class="form-check-label" for="isPaid_no"> No </label>
+              </div>
+            </div>
+          </div>
+          <div class="rental-agreement-part-division mt-2">
+            <div class="mb-3">
+              <label for="is_settlement_yes" class="form-label mb-0"
+                ><i class="fa-sharp fa-solid fa-file-contract"></i>&nbsp;Is this
+                bill part of the bill settlement?</label
+              >
+              <div id="emailHelp" class="form-text"></div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="isSettlement"
+                id="isSettlement_yes" value="yes" {% if bill %} {% if
+                bill.isSettlement == True%} checked {%endif%} {% else %}checked
+                {%endif%}/>
+                <label class="form-check-label" for="isSettlement_yes">
+                  Yes
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="isSettlement"
+                id="isSettlement_no" value="no" {% if bill.isSettlement ==
+                False%} checked {%endif%} />
+                <label class="form-check-label" for="isSettlement_no">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+          <!-- Is paid -->
+          <div class="mt-3 mb-3">
+            <label for="mediaBillDesc" class="form-label"
+              >Additional information</label
+            >
+            <textarea
+              id="mediaBillDesc"
+              name="mediaBillDesc"
+              class="form-control"
+              placeholder="Enter any additional information"
+              rows="3"
+            >
+{{bill.mediaBillDesc}}</textarea
+            >
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark">Duplicate bill</button>
+        <div class="row-end"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

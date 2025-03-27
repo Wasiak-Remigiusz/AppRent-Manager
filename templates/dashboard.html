@@ -1,0 +1,120 @@
+{% extends "base.html" %} {% block content %}
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="confirmDeleteModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          This apartment will be deleted:
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" id="idDeleteModalBody">...</div>
+      <div class="modal-footer">
+        <form action="" method="GET" id="confirmDeleteForm">
+          <button
+            type="button"
+            class="btn btn-modal-close"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    //For a Delete Record Popup
+    $(".delete-confirm").click(function () {
+      //getattributes of the found element
+      var desc = $(this).attr("data-desc");
+      var url = $(this).attr("data-url");
+      $("#idDeleteModalBody").text(desc);
+      $("#confirmDeleteForm").attr("action", url);
+    });
+  });
+</script>
+
+<!-- container -->
+
+<div class="container py-5 main-design">
+  <div class="row">
+    <div class="col-12">
+      <div class="info-first title-admin-panel col-4"><p>dashboard</p></div>
+      <div class="row">
+        <div class="col-10"></div>
+        <div class="col-2 add-apartment">
+          <form
+            action="{{url_for('dash.new_apartment', user_name = session['user'])}}"
+          >
+            <label for="exampleInputLastName" class="form-label"
+              >Add apartment:</label
+            >
+            <button type="submit" class="btn btn-add-user">
+              <i class="fa-solid fa-plus i-add-user"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-1"></div>
+    <div class="col-10">
+      {% for apartment in apartments %}
+      <div class="card mt-3 card-dash">
+        <h5 class="card-header">
+          <i class="fa-solid fa-house me-2 i-icone-dash p-1"></i
+          >{{apartment.apartmentName}}
+        </h5>
+        <div class="card-body">
+          <h5 class="card-title">{{apartment.city}}</h5>
+          <p class="card-text">{{apartment.country.countryName}}</p>
+          <div class="text-end">
+            <a
+              href="{{url_for('dash.edit_apartment', apartment= apartment.apartmentName)}} "
+              class="btn btn-outline-dark btn-edit-apartment"
+              ><i class="fa-solid fa-file-pen i-edit-apartment"></i
+            ></a>
+            <a
+              href="#"
+              class="btn btn-danger btn-sm delete-confirm btn-delete-apartment"
+              data-bs-toggle="modal"
+              data-bs-target="#confirmDeleteModal"
+              data-desc="{{'Delete apartment {}?'.format(apartment.apartmentName)}}"
+              data-url="{{url_for('dash.delete_apartment',apartment_name= apartment.apartmentName)}}"
+              ><i class="fa-solid fa-trash i-delete-apartment"></i
+            ></a>
+            <a
+              href="{{url_for('apartment_manager.manager', apartment_name=apartment.apartmentName, tab_name=tab_name)}} "
+              class="btn btn-dark btn-enter-apartment"
+            >
+              <i class="fa-sharp fa-solid fa-door-open i-enter-apartment"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="col-1"></div>
+  </div>
+  <div class="row-end"></div>
+</div>
+
+{% endblock %}

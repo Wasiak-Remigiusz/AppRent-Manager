@@ -1,0 +1,343 @@
+:root {
+  --primary-color: black;
+  --secondary-color: #0dcaf0;
+  --hover-color: rgba(0, 0, 0, 0.051);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+.index {
+  border-right: 1.5px solid var(--primary-color);
+  height: 50vh;
+  width: 80vh;
+}
+
+.info {
+  padding: 20px;
+  margin-top: 150px;
+  width: 60vh;
+  height: 30vh;
+}
+
+.info-first {
+  font-size: 36px;
+}
+
+.info-second {
+  font-size: 20px;
+}
+
+.btn {
+  width: 150px;
+  height: 50px;
+}
+
+.info-signup {
+  padding: 20px;
+  margin-top: 30px;
+  width: 60vh;
+  height: 30vh;
+}
+
+.btn-users-list {
+  width: 80px;
+  height: 35px;
+}
+
+.title-admin-panel {
+  height: 40px;
+  border-bottom: 1.5px solid var(--primary-color);
+}
+
+.btn:hover {
+  background-color: #fff;
+  color: black;
+}
+
+.navbar-brand {
+  color: var(--secondary-color);
+}
+
+.dash-data {
+  background-color: var(--secondary-color);
+}
+
+.navbar-brand:hover .navbar-brand-second-part {
+  color: var(--secondary-color);
+}
+
+.nav-rent:hover .txt-second-part {
+  color: var(--secondary-color);
+}
+
+.nav-rent:hover .txt-second-part {
+  color: var(--secondary-color);
+}
+
+.nav-login:hover .login-txt-second-part {
+  color: var(--secondary-color);
+}
+
+.nav-logout:hover .logout-txt-second-part {
+  color: var(--secondary-color);
+}
+
+.row-end {
+  height: 150px;
+}
+/* Start - About */
+
+/* END - About */
+
+/* START - Dashboard */
+.card-dash:hover .i-card-dash {
+  font-size: 2em;
+}
+.add-apartment {
+  border-top: 1.5px solid var(--primary-color);
+}
+
+.card-dash {
+  transition: all 0.3s;
+}
+.card-dash:hover {
+  transform: scale(1.1);
+  /* background-color: rgba(0, 0, 0, 0.051); */
+  background-color: var(--hover-color);
+}
+
+.i-icone-dash {
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+}
+
+/* EDIT apartment btn */
+.i-edit-apartment,
+.btn-edit-apartment {
+  transition: font-size 0.3s ease;
+}
+
+.card-dash .btn-edit-apartment {
+  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background-color: var(--hover-color);
+  border: 1.5px solid var(--primary-color);
+}
+
+.btn-edit-apartment {
+  border: 1.5px solid var(--secondary-color);
+}
+
+.btn-edit-apartment:hover .i-edit-apartment {
+  font-size: 2em; /* fa-2x */
+}
+
+/* DELETE apartment btn */
+
+.i-delete-apartment,
+.btn-delete-apartment {
+  color: #dc3545;
+  transition: font-size 0.3s ease;
+}
+
+.card-dash .btn-delete-apartment {
+  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background-color: var(--hover-color);
+  border: 1.5px solid #dc3545;
+}
+
+.btn-delete-apartment {
+  border: 1.5px solid var(--secondary-color);
+}
+
+.btn-delete-apartment:hover .i-delete-apartment {
+  font-size: 2em; /* fa-2x */
+}
+
+/* ENTER apartment manager */
+
+.i-enter-apartment,
+.btn-enter-apartment {
+  /* color: var(--primary-color); */
+  color: white;
+  transition: font-size 0.3s ease;
+}
+
+.card-dash .btn-enter-apartment {
+  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background-color: var(--primary-color);
+  border: 1.5px solid var(--primary-color);
+}
+
+.btn-enter-apartment {
+  border: 1.5px solid var(--secondary-color);
+}
+
+.btn-enter-apartment:hover .i-enter-apartment {
+  font-size: 2em; /* fa-2x */
+}
+
+/*  END - Dashbaord */
+
+/* START - Admin Panel */
+
+.add-user {
+  border-top: 1.5px solid var(--primary-color);
+}
+
+.i-add-user,
+.btn-add-user {
+  transition: font-size 0.3s ease;
+}
+
+.btn-add-user {
+  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background-color: var(--secondary-color);
+  border: 1.5px solid var(--secondary-color);
+}
+
+.btn-add-user:hover {
+  border: 1.5px solid var(--secondary-color);
+}
+
+.btn-add-user:hover .i-add-user {
+  font-size: 2em; /* fa-2x */
+}
+
+/* END - Admin Panel */
+
+/* START - BTN for Modal */
+.btn-modal-close {
+  background-color: var(--secondary-color);
+}
+
+.btn-modal-close:hover {
+  border: 1.5px solid var(--secondary-color);
+}
+/* END - BTN for Modal */
+
+/* START - Apartment_Managet */
+.nav-pills .nav-link {
+  color: var(--primary-color);
+  background-color: #f8f8f8;
+  background-color: var(--hover-color);
+  /* border-radius: 0%;
+  border-bottom: 0.5px solid var(--primary-color); */
+}
+
+.nav-pills .nav-link.active {
+  color: var(--primary-color);
+  /* background-color: #e0e0e0; */
+  background-color: var(--secondary-color);
+  /* background-color: var(--secondary-color);
+  border-radius: 0%;
+  border-bottom: 0.5px solid var(--primary-color); */
+}
+
+.btn-add-rental-agreement {
+  background-color: var(--primary-color);
+}
+
+.i-add-rental-agreement {
+  color: white;
+}
+
+.btn-add-rental-agreement:hover {
+  background-color: var(--primary-color);
+}
+
+/* .tab-pane {
+  background-color: #0dcaf0;
+} */
+
+/* Inside the tabs: Apartment_Managet */
+.i-tab-content,
+.btn-tab-content {
+  color: white;
+  transition: font-size 0.3s ease;
+}
+
+.btn-tab-content {
+  padding: 10px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background-color: var(--primary-color);
+  background-color: var(--primary-color);
+  border: 1.5px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-tab-content:hover {
+  border: 1.5px solid var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+.btn-tab-content:hover .i-tab-content {
+  font-size: 2em; /* fa-2x */
+}
+
+table .tab-tab:hover {
+  background-color: var(--secondary-color);
+}
+
+.a-update-apartment-manager {
+  color: var(--primary-color);
+}
+.a-update-apartment-manager:hover {
+  color: var(--secondary-color);
+}
+
+.a-delete-apartment-manager {
+  color: var(--primary-color);
+}
+.a-delete-apartment-manager:hover {
+  color: red;
+}
+
+.a-update-paid-apartment-manager {
+  color: var(--primary-color);
+}
+.a-update-paid-apartment-manager:hover {
+  color: var(--secondary-color);
+}
+
+.i-copy:hover {
+  color: orange;
+}
+/* END - Apartment_Managet */
+
+/*  START - new_rental_agreement.html */
+
+.rental-agreement-part-division {
+  border-radius: 8px;
+  padding: 10px;
+  background-color: var(--hover-color);
+  border: 1px solid var(--primary-color);
+}
+
+/*  END - new_rental_agreement.html */

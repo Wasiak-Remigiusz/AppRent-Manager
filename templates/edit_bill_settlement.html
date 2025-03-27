@@ -1,0 +1,144 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="index">
+    <div class="info-signup">
+      <div class="info-first"><p>Edit bill settlement</p></div>
+      <form
+        method="POST"
+        action="{{url_for('apartment_manager.edit_bill_settlement', apartment_name = bill_settlement.apartment.apartmentName, agreement_name= bill_settlement.rental_agreement.agreementName, bill_settlement_id = bill_settlement.billSettlementId)}}"
+      >
+        <div class="mb-3">
+          <label for="apartment" class="form-label">Apartment Name</label>
+          <input
+            type="text"
+            id="apartment"
+            name="apartment"
+            value="{{apartment.apartmentName}}"
+            class="form-control"
+            readonly
+            style="background-color: rgba(13, 110, 253, 0.1)"
+          />
+        </div>
+        <div class="mt-3 mb-3 rental-agreement-part-division">
+          <div class="mt-3 mb-3">
+            <label for="agreementName" class="form-label"
+              ><i class="fa-solid fa-file-signature"></i>&nbsp;Agreement
+              Name</label
+            >
+            <input
+              type="text"
+              id="agreementName"
+              name="agreementName"
+              value="{{bill_settlement.rental_agreement.agreementName}}"
+              class="form-control"
+              readonly
+              style="background-color: rgba(13, 110, 253, 0.1)"
+            />
+          </div>
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="monthBillingPeriod" class="form-label">Month</label>
+              <input
+                type="text"
+                id="monthBillingPeriod"
+                name="monthBillingPeriod"
+                value="{{bill_settlement.monthBillingPeriod}}"
+                class="form-control"
+                readonly
+                style="background-color: rgba(13, 110, 253, 0.1)"
+              />
+            </div>
+            <div class="mb-3 col-6">
+              <label for="paymentDate" class="form-label">Payment date</label>
+              <input
+                type="date"
+                id="paymentDate"
+                name="paymentDate"
+                value="{{bill_settlement.paymentDate}}"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="toBeRefundedByLandlord" class="form-label"
+                >Landlord Pays
+                ({{bill_settlement.rental_agreement.currency.currencySymbol}})</label
+              >
+              <input
+                type="number"
+                id="toBeRefundedByLandlord"
+                name="toBeRefundedByLandlord"
+                class="form-control"
+                placeholder="No landlord payment"
+                value="{{bill_settlement.toBeRefundedByLandlord}}"
+                step="0.01"
+                min="0.00"
+              />
+            </div>
+
+            <div class="mb-3 col-6">
+              <label for="toBeRefundedByTenant" class="form-label"
+                >Tenant Pays
+                ({{bill_settlement.rental_agreement.currency.currencySymbol}})</label
+              >
+              <input
+                type="number"
+                id="toBeRefundedByTenant"
+                name="toBeRefundedByTenant"
+                class="form-control"
+                placeholder="No tenant payment"
+                value="{{bill_settlement.toBeRefundedByTenant}}"
+                step="0.01"
+                min="0.00"
+              />
+            </div>
+          </div>
+
+          <div class="rental-agreement-part-division">
+            <div class="mb-3">
+              <label for="isPaid_yes" class="form-label mb-0"
+                ><i class="fa-solid fa-credit-card"></i>&nbsp;Has the bill been
+                paid?</label
+              >
+              <div id="emailHelp" class="form-text"></div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="isPaid"
+                id="isPaid_yes" value="yes" {% if bill_settlement %} {% if
+                bill_settlement.isPaid == True%} checked {%endif%} {% else
+                %}checked {%endif%}/>
+                <label class="form-check-label" for="isPaid_yes"> Yes </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="isPaid"
+                id="isPaid_no" value="no" {% if bill_settlement.isPaid ==
+                False%} checked {%endif%} />
+                <label class="form-check-label" for="isPaid_no"> No </label>
+              </div>
+            </div>
+          </div>
+          <!-- Is paid -->
+          <div class="mt-3 mb-3">
+            <label for="billSettlementDesc" class="form-label"
+              >Additional information</label
+            >
+            <textarea
+              id="billSettlementDesc"
+              name="billSettlementDesc"
+              class="form-control"
+              placeholder="Enter any additional information"
+              rows="3"
+            >
+{{bill_settlement.billSettlementDesc}}</textarea
+            >
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark">Edit settlement</button>
+        <div class="row-end"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
