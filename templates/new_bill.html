@@ -1,0 +1,153 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="index">
+    <div class="info-signup">
+      <div class="info-first"><p>Add new bill</p></div>
+      <form
+        method="POST"
+        action="{{url_for('apartment_manager.new_bill', apartment_name=apartment.apartmentName)}}"
+      >
+        <div class="mb-3">
+          <label for="apartment" class="form-label">Apartment Name</label>
+          <input
+            type="text"
+            id="apartment"
+            name="apartment"
+            value="{{apartment.apartmentName}}"
+            class="form-control"
+            readonly
+            style="background-color: rgba(13, 110, 253, 0.1)"
+          />
+        </div>
+        <div class="mt-3 mb-3 rental-agreement-part-division">
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="bill_name" class="form-label"
+                ><i class="fa-solid fa-money-check-dollar-pen"></i>&nbsp;Bill
+                name</label
+              >
+              <input
+                type="text"
+                id="bill_name"
+                name="bill_name"
+                placeholder="Enter the bill name"
+                value="{{bill.bill_name}}"
+                class="form-control"
+              />
+            </div>
+            <div class="mb-3 col-6">
+              <label for="bill_type" class="form-label">Bill type</label>
+              <select name="bill_type_id" id="bill_type_id" class="form-select">
+                {% for bill_type in bill_type_list%} <option
+                value="{{bill_type.billTypeId}}" {% if bill %} {{'selected' if
+                bill_type.billTypeId==bill.bill_type_id}} {% else %}
+                {{'selected' if bill_type.billTypeId==1}} {% endif %} >
+                {{bill_type.billTypeName}} {% endfor%}
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="month_billing_period" class="form-label"
+                >Month
+              </label>
+              <input
+                type="month"
+                id="month_billing_period"
+                name="month_billing_period"
+                value="{{bill.month_billing_period}}"
+                class="form-control"
+              />
+            </div>
+            <div class="mb-3 col-6">
+              <label for="currency" class="form-label">Payment currency</label>
+              <select name="currency_id" id="currency_id" class="form-select">
+                {% for currency in currencies_list%} <option
+                value="{{currency.currencyId}}" {% if bill %} {{'selected' if
+                currency.currencyId==bill.currency_id}} {% else %} {{'selected'
+                if currency.currencyId==4}} {% endif %} >
+                {{currency.currencySymbol}} {% endfor%}
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="payment_due_date" class="form-label"
+                >Monthly payment due date</label
+              >
+              <input
+                type="number"
+                id="payment_due_date"
+                name="payment_due_date"
+                value="{{bill.payment_due_date}}"
+                class="form-control"
+                placeholder="Enter day of the month"
+                min="1"
+                max="31"
+              />
+            </div>
+
+            <div class="mb-3 col-6">
+              <label for="amount_bill" class="form-label">Amount</label>
+              <input
+                type="number"
+                id="amount_bill"
+                name="amount_bill"
+                value="{{bill.amount_bill}}"
+                class="form-control"
+                placeholder="Enter the bill amount"
+                step="0.01"
+                min="0.00"
+              />
+            </div>
+          </div>
+
+          <div class="rental-agreement-part-division">
+            <div class="mb-3">
+              <label for="is_settlement_yes" class="form-label mb-0"
+                >Is this bill part of the bill settlement?</label
+              >
+              <div id="emailHelp" class="form-text"></div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio"
+                name="is_settlement" id="is_settlement_yes" value="yes" {% if
+                bill %} {% if bill.is_settlement == True%} checked {%endif%} {%
+                else %}checked {%endif%}/>
+                <label class="form-check-label" for="is_settlement_yes">
+                  Yes
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio"
+                name="is_settlement" id="is_settlement_no" value="no" {% if
+                bill.is_settlement == False%} checked {%endif%} />
+                <label class="form-check-label" for="is_settlement_no">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+          <!-- Is paid -->
+          <div class="mt-3 mb-3">
+            <label for="media_bill_desc" class="form-label"
+              >Additional information</label
+            >
+            <textarea
+              id="media_bill_desc"
+              name="media_bill_desc"
+              class="form-control"
+              placeholder="Enter any additional information"
+              rows="3"
+            >
+{{bill.media_bill_desc}}</textarea
+            >
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark">Add bill</button>
+        <div class="row-end"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

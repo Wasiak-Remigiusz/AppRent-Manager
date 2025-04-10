@@ -1,0 +1,530 @@
+{% extends "base.html" %} {% block content %}
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="confirmDeleteModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          <!--  This content will be replaced dynamically  -->
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" id="idDeleteModalBody">...</div>
+      <div class="modal-footer">
+        <form action="" method="GET" id="confirmDeleteForm">
+          <button
+            type="button"
+            class="btn btn-modal-close"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    //For a Delete Record Popup
+    // This function is applied to all elements with class ending with ".delete-confirm"
+    $(".delete-confirm").click(function () {
+      //getattributes of the found element
+      var desc = $(this).attr("data-desc");
+      var url = $(this).attr("data-url");
+      var type = $(this).attr("data-type");
+      //the #... designes id if an element - change the text in the modal window
+      $("#idDeleteModalBody").text(desc);
+      $("#confirmDeleteForm").attr("action", url);
+      var title = `This ${type} will be deleted:`;
+      $("#exampleModalLabel").text(title);
+    });
+  });
+</script>
+
+<!-- container -->
+<div class="container py-5 main-design">
+  <div class="row">
+    <div class="col-12">
+      <div class="info-first title-admin-panel col-4">
+        <p>
+          <i class="fa-solid fa-house me-2 i-icone-dash p-1"></i
+          >{{apartment_name.apartmentName}}
+        </p>
+      </div>
+      <div class="row">
+        <div class="col-10"></div>
+        <div class="col-2 add-apartment">
+          <form action="{{url_for('dash.dashboard')}}" method="POST">
+            <label for="exampleInputLastName" class="form-label"
+              >Back to Dashboard:</label
+            >
+            <button type="submit" class="btn btn-add-user">
+              <i class="fa-sharp fa-solid fa-backward i-add-user"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- TABS: Rental Agreement, Monthly Rent Payments, Bills and Bills Settlement   -->
+  <div class="row">
+    <!-- nav-tabs   -->
+    <ul class="nav nav-pills mb-4" id="pills-tab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a
+          class="nav-link {% if tab_name == 'rental-agreement-tab' %}active{% endif %}"
+          id="rental-agreement-tab"
+          href="{{ url_for('apartment_manager.manager', apartment_name=apartment_name.apartmentName, tab_name='rental-agreement-tab') }}"
+          role="tab"
+          aria-controls="rental-agreement-content"
+          aria-selected="{{ 'true' if tab_name == 'rental-agreement-tab' else 'false' }}"
+        >
+          Rental Agreement
+        </a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a
+          class="nav-link {% if tab_name == 'monthly-rent-tab' %}active{% endif %}"
+          id="monthly-rent-tab"
+          href="{{ url_for('apartment_manager.manager', apartment_name=apartment_name.apartmentName, tab_name='monthly-rent-tab') }}"
+          role="tab"
+          aria-controls="monthly-rent-content"
+          aria-selected="{{ 'true' if tab_name == 'monthly-rent-tab' else 'false' }}"
+        >
+          Monthly Rent Payments
+        </a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a
+          class="nav-link {% if tab_name == 'bills-tab' %}active{% endif %}"
+          id="bills-tab"
+          href="{{ url_for('apartment_manager.manager', apartment_name=apartment_name.apartmentName, tab_name='bills-tab') }}"
+          role="tab"
+          aria-controls="bills-content"
+          aria-selected="{{ 'true' if tab_name == 'bills-tab' else 'false' }}"
+        >
+          Bills
+        </a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a
+          class="nav-link {% if tab_name == 'bills-settlement-tab' %}active{% endif %}"
+          id="bills-settlement-tab"
+          href="{{ url_for('apartment_manager.manager', apartment_name=apartment_name.apartmentName, tab_name='bills-settlement-tab') }}"
+          role="tab"
+          aria-controls="bills-settlement-content"
+          aria-selected="{{ 'true' if tab_name == 'bills-settlement-tab' else 'false' }}"
+        >
+          Bills Settlement
+        </a>
+      </li>
+    </ul>
+    <!-- tab-content   -->
+    <div class="tab-content" id="pills-tabContent">
+      <div
+        class="tab-pane fade {% if tab_name == 'rental-agreement-tab' %}show active{% endif %}"
+        id="rental-agreement-content"
+        role="tabpanel"
+        aria-labelledby="rental-agreement-tab"
+        tabindex="0"
+      >
+        <div class="row">
+          <div class="col-2">
+            <p class="mb-2">Add Rental Agreement:</p>
+            <a
+              href="{{url_for('apartment_manager.new_rental_agreement', apartment_name=apartment_name.apartmentName)}} "
+              class="btn btn-dark btn-tab-content"
+            >
+              <i class="fa-solid fa-handshake i-tab-content"></i>
+            </a>
+          </div>
+          <div class="col-10"></div>
+        </div>
+        <div class="row mt-3">
+          <table class="table table-hover table-striped">
+            <thead class="">
+              <tr>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Agreement Name
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Tenant's name
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Start date
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;End date
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Monthly rent
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Bills settlement
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Monthly bills
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Update
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Delete
+                </th>
+              </tr>
+            </thead>
+            <tbody class="">
+              <tr>
+                {% if agreements %} {%for i in agreements%}
+                <th scope="row">{{i.agreementName}}</th>
+                <td>{{i.tenant.tenantFirstName}}</td>
+                <td>{{i.startDate}}</td>
+                <td>{{i.endDate}}</td>
+                <td>
+                  {{i.monthlyRentPayment}}&nbsp;{{i.currency.currencySymbol}}
+                </td>
+                {% if i.isBillsSettlement %}
+                <td><i class="fa-solid fa-check"></i></td>
+                {% else %}
+                <td><i class="fa-solid fa-x"></i></td>
+                {% endif %}{% if i.isBillsSettlement %}
+                <td>
+                  {{i.monthlyBillsAmount}}&nbsp;{{i.currency.currencySymbol}}
+                </td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                <td>
+                  <a
+                    class="a-update-apartment-manager"
+                    href="{{url_for('apartment_manager.edit_rental_agreement', apartment_name =apartment_name.apartmentName, agreement_name =i.agreementName)}} "
+                    ><i class="fa-duotone fa-solid fa-file-pen"></i
+                  ></a>
+                </td>
+                <td>
+                  <a
+                    href="#"
+                    class="a-delete-apartment-manager delete-confirm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#confirmDeleteModal"
+                    data-desc="{{'Delete agreement {}?'.format(i.agreementName)}}"
+                    data-url="{{url_for('apartment_manager.delete_rental_agreement', agreement_name =i.agreementName)}} "
+                    data-type="agreement"
+                    ><i class="fa-duotone fa-solid fa-trash"></i
+                  ></a>
+                </td>
+              </tr>
+              {% endfor %} {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div
+        class="tab-pane fade {% if tab_name == 'monthly-rent-tab' %}show active{% endif %}"
+        id="monthly-rent-content"
+        role="tabpanel"
+        aria-labelledby="monthly-rent-tab"
+        tabindex="0"
+      >
+        <div class="row">
+          <div class="col-2">
+            <p class="mb-2">Add Rental Agreement:</p>
+            <a
+              href="{{url_for('apartment_manager.new_rental_agreement', apartment_name=apartment_name.apartmentName)}} "
+              class="btn btn-dark btn-tab-content"
+            >
+              <i class="fa-solid fa-handshake i-tab-content"></i>
+            </a>
+          </div>
+          <div class="col-10"></div>
+        </div>
+        <div class="row mt-3">
+          <table class="table table-hover table-striped">
+            <thead class="">
+              <tr>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Month
+                </th>
+
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Payment due date
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Payment date
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Amount
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Agreement Name
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Paid
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Update
+                </th>
+              </tr>
+            </thead>
+            <tbody class="">
+              <tr>
+                {% if apartment_rent_payments %} {%for i in
+                apartment_rent_payments%}
+                <th scope="row">{{i.monthBillingPeriod}}</th>
+                <td>{{i.paymentDueDate}}</td>
+                <td>{%if i.paymentDate %}{{i.paymentDate}} {% endif %}</td>
+                <td>
+                  {{i.amountPayment }}
+                  &nbsp;{{i.rental_agreement.currency.currencySymbol}}
+                </td>
+                <td>{{i.rental_agreement.agreementName}}</td>
+                <td>
+                  <a
+                    class="a-update-paid-apartment-manager"
+                    href="{{url_for('apartment_manager.update_rental_payment_status', agreement_name=i.rental_agreement.agreementName, rental_payment_Id = i.rentPaymentId)}} "
+                  >
+                    {%if i.isPaid %}
+                    <i class="fa-solid fa-check is-paid"></i>
+                    {%else%}<i class="fa-regular fa-square not-paid"></i>{%
+                    endif %}
+                  </a>
+                </td>
+                <td>
+                  <a
+                    class="a-update-apartment-manager"
+                    href="{{url_for('apartment_manager.edit_rental_payment',agreement_name=i.rental_agreement.agreementName, rental_payment_Id = i.rentPaymentId)}} "
+                    ><i class="fa-duotone fa-solid fa-file-pen"></i
+                  ></a>
+                </td>
+              </tr>
+              {% endfor %} {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div
+        class="tab-pane fade {% if tab_name == 'bills-tab' %}show active{% endif %}"
+        id="bills-content"
+        role="tabpanel"
+        aria-labelledby="bills-tab"
+        tabindex="0"
+      >
+        <div class="row">
+          <div class="col-2">
+            <p class="mb-2">Add Bill:</p>
+            <a
+              href="{{url_for('apartment_manager.new_bill', apartment_name=apartment_name.apartmentName)}} "
+              class="btn btn-dark btn-tab-content"
+            >
+              <i class="fa-solid fa-money-check-dollar-pen i-tab-content"></i>
+            </a>
+          </div>
+          <div class="col-10"></div>
+        </div>
+        <div class="row mt-3">
+          <table class="table table-hover table-striped">
+            <thead class="">
+              <tr>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Month
+                </th>
+
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Payment due date
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Payment date
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Amount
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Bill name
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Bill type
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Settlement
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Paid
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Update
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Duplicate
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Delete
+                </th>
+              </tr>
+            </thead>
+            <tbody class="">
+              <tr>
+                {% if apartment_bills %} {%for i in apartment_bills%}
+                <th scope="row">{{i.monthBillingPeriod}}</th>
+                <td>{{i.paymentDueDate }}</td>
+                <td>{%if i.paymentDate %}{{i.paymentDate}} {% endif %}</td>
+                <td>{{i.amountBill }} &nbsp;{{i.currency.currencySymbol}}</td>
+                <td>{{i.billName }}</td>
+                <td>{{i.bill_type.billTypeName }}</td>
+                {% if i.isSettlement%}
+                <td><i class="fa-solid fa-check"></i></td>
+                {% else %}
+                <td><i class="fa-solid fa-x"></i></td>
+                {% endif %}
+                <td>
+                  <a
+                    class="a-update-paid-apartment-manager"
+                    href="{{url_for('apartment_manager.update_bill_payment_status', apartment_name= apartment_name.apartmentName, bill_id = i.billId)}} "
+                  >
+                    {%if i.isPaid %}
+                    <i class="fa-solid fa-check is-paid"></i>
+                    {%else%}<i class="fa-regular fa-square not-paid"></i>{%
+                    endif %}
+                  </a>
+                </td>
+                <td>
+                  <a
+                    class="a-update-apartment-manager"
+                    href="{{url_for('apartment_manager.edit_bill_payment',apartment_name= apartment_name.apartmentName, bill_id = i.billId)}} "
+                    ><i class="fa-duotone fa-solid fa-file-pen"></i
+                  ></a>
+                </td>
+                <td>
+                  <a
+                    class="a-update-apartment-manager"
+                    href="{{url_for('apartment_manager.duplicate_bill_payment',apartment_name= apartment_name.apartmentName, bill_id = i.billId)}} "
+                    ><i class="fa-regular fa-copy i-copy"></i
+                  ></a>
+                </td>
+                <td>
+                  <a
+                    href="#"
+                    class="a-delete-apartment-manager delete-confirm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#confirmDeleteModal"
+                    data-desc="{{'Delete bill {}?'.format(i.billName)}}"
+                    data-url="{{url_for('apartment_manager.delete_bill_payment', apartment_name= apartment_name.apartmentName, bill_id = i.billId)}} "
+                    data-type="bill"
+                    ><i class="fa-duotone fa-solid fa-trash"></i
+                  ></a>
+                </td>
+              </tr>
+              {% endfor %} {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div
+        class="tab-pane fade {% if tab_name == 'bills-settlement-tab' %}show active{% endif %}"
+        id="bills-settlement-content"
+        role="tabpanel"
+        aria-labelledby="bills-settlement-tab"
+        tabindex="0"
+      >
+        <div class="row">
+          <div class="col-2">
+            <p class="mb-2">Add Bill:</p>
+            <a
+              href="{{url_for('apartment_manager.new_bill', apartment_name=apartment_name.apartmentName)}} "
+              class="btn btn-dark btn-tab-content"
+            >
+              <i class="fa-solid fa-money-check-dollar-pen i-tab-content"></i>
+            </a>
+          </div>
+          <div class="col-10"></div>
+        </div>
+        <div class="row mt-3">
+          <table class="table table-hover table-striped">
+            <thead class="">
+              <tr>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Month
+                </th>
+
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Payment date
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Agreement name
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Landlord Pays
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Tenant Pays
+                </th>
+
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Paid
+                </th>
+                <th scope="col">
+                  <i class="fa-solid fa-tablet"></i>&nbsp;Update
+                </th>
+              </tr>
+            </thead>
+            <tbody class="">
+              <tr>
+                {% if bills_settlements %} {%for i in bills_settlements%}
+                <th scope="row">{{i.monthBillingPeriod}}</th>
+                <td>{%if i.paymentDate %}{{i.paymentDate}} {% endif %}</td>
+                <td>{{i.rental_agreement.agreementName }}</td>
+                <td>
+                  {% if i.toBeRefundedByLandlord %} {{i.toBeRefundedByLandlord
+                  }} &nbsp;{{i.rental_agreement.currency.currencySymbol}} {%
+                  endif %}
+                </td>
+                <td>
+                  {% if i.toBeRefundedByTenant %} {{i.toBeRefundedByTenant }}
+                  &nbsp;{{i.rental_agreement.currency.currencySymbol}} {% endif
+                  %}
+                </td>
+
+                <td>
+                  <a
+                    class="a-update-paid-apartment-manager"
+                    href="{{url_for('apartment_manager.update_bill_settlement_status', apartment_name = i.apartment.apartmentName, agreement_name= i.rental_agreement.agreementName, bill_settlement_id = i.billSettlementId)}} "
+                  >
+                    {%if i.isPaid %}
+                    <i class="fa-solid fa-check is-paid"></i>
+                    {%else%}<i class="fa-regular fa-square not-paid"></i>{%
+                    endif %}
+                  </a>
+                </td>
+                <td>
+                  <a
+                    class="a-update-apartment-manager"
+                    href="{{url_for('apartment_manager.edit_bill_settlement', apartment_name = i.apartment.apartmentName, agreement_name= i.rental_agreement.agreementName, bill_settlement_id = i.billSettlementId)}} "
+                    ><i class="fa-duotone fa-solid fa-file-pen"></i
+                  ></a>
+                </td>
+              </tr>
+              {% endfor %} {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row-end"></div>
+</div>
+
+{% endblock %}

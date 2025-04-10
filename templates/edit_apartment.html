@@ -1,0 +1,96 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="index">
+    <div class="info-signup">
+      <div class="info-first"><p>Edit apartment</p></div>
+      <form
+        method="POST"
+        action="{{url_for('dash.edit_apartment', apartment=apartment.apartmentName)}}"
+      >
+        <div class="mb-3">
+          <label for="exampleInputFirstName" class="form-label"
+            >Apartment Name</label
+          >
+          <input
+            type="text"
+            id="apartmentName"
+            name="apartmentName"
+            value="{{apartment.apartmentName}}"
+            class="form-control"
+            id="exampleInputApartmentName"
+            aria-describedby="ApartmenttName"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputLastName" class="form-label"
+            >Street name</label
+          >
+          <input
+            type="text"
+            id="street"
+            name="street"
+            value="{{apartment.street}}"
+            class="form-control"
+            id="exampleInputStreetName"
+            aria-describedby="StreetName"
+          />
+        </div>
+        <div class="row">
+          <div class="mb-3 col-6">
+            <label for="exampleInputUsername" class="form-label"
+              >Street number</label
+            >
+            <input
+              type="text"
+              id="streetNumber"
+              name="streetNumber"
+              value="{{apartment.streetNumber}}"
+              class="form-control"
+              id="exampleInputStreetSumber"
+              aria-describedby="StreetSumber"
+            />
+          </div>
+          <div class="mb-3 col-6">
+            <label for="exampleInputUsername" class="form-label"
+              >Apartment number</label
+            >
+            <input
+              type="text"
+              id="apartmentNumber"
+              name="apartmentNumber"
+              value="{{apartment.apartmentNumber}}"
+              class="form-control"
+              id="exampleInputApartmentNumber"
+              aria-describedby="ApartmentNumber"
+            />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputLastName" class="form-label">City</label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            value="{{apartment.city}}"
+            class="form-control"
+            id="exampleInputCityName"
+            aria-describedby="CityName"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputCountry" class="form-label">Country</label>
+          <select name="countryId" id="countryId" class="form-select">
+            {% for country in countries_list%} <option
+            value="{{country.countryId}}" {% if apartment %} {{'selected' if
+            country.countryId==apartment.countryId}} {% else %} {{'selected' if
+            country.countryId==5}} {% endif %} > {{country.countryName}} {%
+            endfor%}
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-dark">Edit apartment</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
