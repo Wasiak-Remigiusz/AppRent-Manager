@@ -69,7 +69,7 @@ Below are some screenshots showcasing different parts of the application:
 
 1. **Entry page**
 
-   - the welcome page of the application;a
+   - the welcome page of the application;
 
    ![Main Dashboard](./static/img/index.png)
 
@@ -106,9 +106,9 @@ Below are some screenshots showcasing different parts of the application:
 
 5. **Apartment Manage - Bills Section**
 
-   - In this section, users can add different types of bills:
-     - Bills included in settlements (e.g., administrative fees, utilities);
-     - Bills not included in settlements (e.g., property tax, insurance);
+   - In this section users can add different types of bills:
+     - Bills included in settlements (e.g. administrative fees, utilities);
+     - Bills not included in settlements (e.g. property tax, insurance);
 
    ![Settings](./static/img/apartment-manager_Bills.png)
 
